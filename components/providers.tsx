@@ -9,7 +9,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 			config={{
 				// Customize Privy's appearance in your app
 				appearance: {
-					theme: "light",
+					theme: "dark",
 					accentColor: "#676FFF",
 					logo: "https://www.safemints.com/icon.png",
 				},
