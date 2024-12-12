@@ -12,7 +12,7 @@ export default function Home() {
 	const { ready, authenticated } = usePrivy();
 
 	return (
-		<main className="min-h-screen flex flex-col items-center justify-center gap-6 max-w-sm mx-auto">
+		<main className="min-h-screen flex flex-col items-center justify-center gap-6 max-w-sm mx-auto mt-12">
 			<Suspense
 				fallback={
 					<h1 className="text-4xl font-mono font-extrabold">SAFE MINTS</h1>
