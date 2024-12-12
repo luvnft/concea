@@ -79,12 +79,23 @@ export const NFTGrid = forwardRef((props, ref) => {
 					variant: "destructive",
 				});
 			}
-			const newWindow = window.open(
-				accessData.url,
-				"_blank",
-				"noopener,noreferrer",
-			);
-			if (newWindow) newWindow.opener = null;
+			const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+			if (isMobile) {
+				const link = document.createElement("a");
+				link.href = accessData.url;
+				link.target = "_blank";
+				link.rel = "noopener noreferrer";
+
+				document.body.appendChild(link);
+				link.click();
+
+				setTimeout(() => {
+					document.body.removeChild(link);
+				}, 100);
+			} else {
+				window.open(accessData.url, "_blank", "noopener,noreferrer");
+			}
 			setVerifyingId(null);
 		} catch (error) {
 			console.log(error);
