@@ -17,8 +17,6 @@ import {
 import {
 	Dialog,
 	DialogContent,
-	DialogDescription,
-	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
@@ -28,6 +26,7 @@ import { usePrivy, useWallets } from "@privy-io/react-auth";
 import { mintNFT } from "@/lib/viem";
 import { baseSepolia } from "viem/chains";
 import { Loader2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
 	name: z.string().min(2).max(50),
@@ -45,6 +44,8 @@ export function NFTForm({ onMintSuccess }: NFTFormProps) {
 	const [file, setFile] = useState<File | undefined>();
 	const [image, setImage] = useState<File | undefined>();
 	const [loading, setLoading] = useState(false);
+	const [open, setOpen] = useState(false);
+	const { toast } = useToast();
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFile(e.target?.files?.[0]);
@@ -104,26 +105,39 @@ export function NFTForm({ onMintSuccess }: NFTFormProps) {
 				}),
 			});
 			const metadataUpload = await metadataUploadReq.json();
-			console.log(metadataUpload);
 
-			const wallet = wallets[0]; // Replace this with your desired wallet
+			const wallet = wallets[0];
 			await wallet.switchChain(baseSepolia.id);
 			const provider = await wallet.getEthereumProvider();
 			const mint = await mintNFT(metadataUpload.tokenURI, provider);
-			console.log(mint);
+			if (!mint) {
+				setLoading(false);
+				toast({
+					title: "Error with Mint",
+					variant: "destructive",
+				});
+			}
+			setOpen(false);
 			setLoading(false);
-			onMintSuccess?.();
+			toast({
+				title: "Mint Complete! 🎉",
+				description: "Please wait a few minutes for NFT to show up on the grid",
+			});
 		} catch (error) {
-			console.log(error);
 			setLoading(false);
+			toast({
+				title: "Problem minting NFT",
+				description: `${error}`,
+				variant: "destructive",
+			});
 		}
 	}
 	return (
-		<Dialog>
-			<Button asChild>
+		<Dialog open={open} onOpenChange={setOpen}>
+			<Button className="w-full" asChild>
 				<DialogTrigger>Create NFT</DialogTrigger>
 			</Button>
-			<DialogContent>
+			<DialogContent className="font-sans">
 				<DialogTitle>Create Your NFT</DialogTitle>
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(mint)} className="space-y-8">
@@ -186,7 +200,7 @@ export function NFTForm({ onMintSuccess }: NFTFormProps) {
 								Minting...
 							</Button>
 						) : (
-							<Button type="submit">Submit</Button>
+							<Button type="submit">Mint</Button>
 						)}
 					</form>
 				</Form>

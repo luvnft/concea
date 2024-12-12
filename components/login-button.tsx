@@ -5,9 +5,14 @@ import { Button } from "./ui/button";
 import { publicClient } from "@/lib/viem";
 import { normalize } from "viem/ens";
 import { useCallback, useEffect, useState } from "react";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
 
 export function LoginButton() {
-	const { ready, authenticated, login, user } = usePrivy();
+	const { ready, authenticated, login, user, logout } = usePrivy();
 	const [ensData, setEnsData] = useState<{
 		ensName: string | null;
 		pfp: string | null;
@@ -53,14 +58,26 @@ export function LoginButton() {
 				</Button>
 			)}
 			{ready && authenticated && user && (
-				<Button>
-					<img
-						src={ensData.pfp || "/pfp.png"}
-						alt={ensData.ensName || "pfp"}
-						className="w-6 h-6 rounded-full"
-					/>
-					{ensData.ensName || truncateAddress(user.wallet?.address)}
-				</Button>
+				<Popover>
+					<PopoverTrigger>
+						<Button className="rounded-full" size="icon">
+							<img
+								src={ensData.pfp || "/pfp.png"}
+								alt={ensData.ensName || "pfp"}
+								className="w-6 h-6 rounded-full"
+							/>
+						</Button>
+					</PopoverTrigger>
+					<PopoverContent className="font-sans flex flex-col gap-4 p-4 items-center">
+						<p className="font-bold font-mono">
+							{ensData.ensName || truncateAddress(user.wallet?.address)}
+						</p>
+
+						<Button size="sm" onClick={logout}>
+							Log out
+						</Button>
+					</PopoverContent>
+				</Popover>
 			)}
 		</>
 	);
