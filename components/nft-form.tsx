@@ -133,11 +133,24 @@ export function NFTForm({ onMintSuccess }: NFTFormProps) {
 		}
 	}
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
+		<Dialog
+			open={open}
+			onOpenChange={(open) => {
+				// Only allow closing via the close button
+				if (!loading) {
+					setOpen(open);
+				}
+			}}
+		>
 			<Button className="w-full" asChild>
 				<DialogTrigger>Create NFT</DialogTrigger>
 			</Button>
-			<DialogContent className="font-sans">
+			<DialogContent
+				onPointerDownOutside={(e) => {
+					e.preventDefault();
+				}}
+				className="font-sans"
+			>
 				<DialogTitle>Create Your NFT</DialogTitle>
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(mint)} className="space-y-8">
