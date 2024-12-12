@@ -79,7 +79,12 @@ export const NFTGrid = forwardRef((props, ref) => {
 					variant: "destructive",
 				});
 			}
-			window.open(accessData.url);
+			const newWindow = window.open(
+				accessData.url,
+				"_blank",
+				"noopener,noreferrer",
+			);
+			if (newWindow) newWindow.opener = null;
 			setVerifyingId(null);
 		} catch (error) {
 			console.log(error);
