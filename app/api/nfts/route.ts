@@ -24,6 +24,7 @@ export async function GET(request: NextRequest) {
 			},
 		);
 		const nftData = await nftReq.json();
+		console.log(nftData.nfts);
 		return NextResponse.json(nftData.nfts, { status: 200 });
 	} catch (e) {
 		console.log(e);
