@@ -21,6 +21,7 @@ export async function GET(request: NextRequest) {
 					"X-API-KEY": process.env.SIMPLEHASH_API_KEY as string,
 					accept: "application/json",
 				},
+				cache: "no-store",
 			},
 		);
 		const nftData = await nftReq.json();
