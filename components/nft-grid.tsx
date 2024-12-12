@@ -106,7 +106,7 @@ export const NFTGrid = forwardRef((props, ref) => {
 	}
 
 	return (
-		<div className="flex flex-col max-w-[500px] gap-4 items-center justify-start">
+		<div className="flex flex-col max-w-[500px] gap-4 items-center justify-start mb-12">
 			{nfts.map((nft: NFT) => (
 				<Card
 					className="flex flex-col w-full gap-2 overflow-hidden"
