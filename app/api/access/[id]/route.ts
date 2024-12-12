@@ -31,6 +31,7 @@ export async function GET(
 			user.wallet?.address as `0x`,
 		);
 		if (!authorized) {
+			console.log("Unauthorized");
 			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 		}
 
