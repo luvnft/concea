@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 		title: "SAFE MINTS",
 		description: "Create and share NFTs with private files",
 		url: "https://safemints.com",
-		siteName: "CandyRoad",
+		siteName: "SAFE MINTS",
 		images: ["https://www.safemints.com/og.png"],
 	},
 	twitter: {
