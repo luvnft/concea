@@ -15,11 +15,11 @@ export default function Home() {
 		<main className="min-h-screen flex flex-col items-center justify-center gap-6 max-w-sm mx-auto mt-12">
 			<Suspense
 				fallback={
-					<h1 className="text-4xl font-mono font-extrabold">SAFE MINTS</h1>
+					<h1 className="text-4xl font-mono font-extrabold">CONCEALMINT</h1>
 				}
 			>
 				<DecryptingText
-					text="SAFE MINTS"
+					text="CONCEALMINT"
 					className="scroll-m-20 text-4xl font-mono font-extrabold tracking-tight lg:text-5xl"
 				/>
 			</Suspense>

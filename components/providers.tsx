@@ -11,7 +11,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 				appearance: {
 					theme: "dark",
 					accentColor: "#676FFF",
-					logo: "https://www.safemints.com/icon.png",
+					logo: "https://www.concealmint.com/icon.png",
 				},
 				loginMethods: ["wallet"],
 			}}

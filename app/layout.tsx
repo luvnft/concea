@@ -18,7 +18,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-	title: "SAFE MINTS",
+	title: "CONCEALMINT",
 	description: "Create and share NFTs with private files",
 	icons: {
 		apple: "/apple-touch-icon.png",
@@ -26,17 +26,17 @@ export const metadata: Metadata = {
 		icon: "/favicon.ico",
 	},
 	openGraph: {
-		title: "SAFE MINTS",
+		title: "CONCEALMINT",
 		description: "Create and share NFTs with private files",
-		url: "https://safemints.com",
-		siteName: "SAFE MINTS",
-		images: ["https://www.safemints.com/og.png"],
+		url: "https://concealmint.com",
+		siteName: "CONCEALMINT",
+		images: ["https://www.concealmint.com/og.png"],
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "SAFE MINTS",
+		title: "CONCEALMINT",
 		description: "Create and share NFTs with private files",
-		images: ["https://www.safemints.com/og.png"],
+		images: ["https://www.concealmint.com/og.png"],
 	},
 };
 
