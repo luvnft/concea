@@ -3,7 +3,15 @@ import { privy } from "@/lib/privy";
 import { baseClient } from "@/lib/viem";
 import { contract } from "@/lib/contract";
 import { isAddressEqual } from "viem";
-import { filesClient } from "@/lib/pinata";
+import { filesClient, ipfsClient } from "@/lib/pinata";
+
+interface NFT {
+	token_id: string;
+	image_url: string;
+	name: string;
+	description: string;
+	file: string;
+}
 
 export async function GET(
 	request: NextRequest,
@@ -35,19 +43,19 @@ export async function GET(
 			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 		}
 
-		const nftDataReq = await fetch(
-			`https://api.simplehash.com/api/v0/nfts/base-sepolia/${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}/${params.id}`,
-			{
-				method: "GET",
-				headers: {
-					"X-API-KEY": process.env.SIMPLEHASH_API_KEY as string,
-				},
-			},
-		);
-		const nftData = await nftDataReq.json();
+		const tokenURI = await baseClient.readContract({
+			address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x`,
+			abi: contract.abi,
+			functionName: "tokenURI",
+			args: [params.id],
+		});
+
+		const { data: nftData } = await ipfsClient.gateways.get(tokenURI as string);
+
+		const nft = nftData as unknown as NFT;
 
 		const url = await filesClient.gateways.createSignedURL({
-			cid: nftData.extra_metadata.file,
+			cid: nft.file,
 			expires: 180,
 		});
 
