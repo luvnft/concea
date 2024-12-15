@@ -28,17 +28,19 @@ import { baseSepolia } from "viem/chains";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
+const wait = (ms: number) => {
+	return new Promise((resolve) => {
+		setTimeout(resolve, ms);
+	});
+};
+
 const formSchema = z.object({
 	name: z.string().min(2).max(50),
 	description: z.string().min(2).max(250),
 	externalUrl: z.string().url(),
 });
 
-interface NFTFormProps {
-	onMintSuccess?: () => void;
-}
-
-export function NFTForm({ onMintSuccess }: NFTFormProps) {
+export function NFTForm({ getNFTs }: any) {
 	const { getAccessToken } = usePrivy();
 	const { wallets } = useWallets();
 	const [file, setFile] = useState<File | undefined>();
@@ -123,6 +125,8 @@ export function NFTForm({ onMintSuccess }: NFTFormProps) {
 				title: "Mint Complete! 🎉",
 				description: "Please wait a few minutes for NFT to show up on the grid",
 			});
+			await wait(2000);
+			getNFTs();
 		} catch (error) {
 			setLoading(false);
 			toast({
