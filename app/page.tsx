@@ -6,12 +6,13 @@ import { NFTGrid } from "@/components/nft-grid";
 import { Suspense, useRef } from "react";
 import { usePrivy } from "@privy-io/react-auth";
 import { DecryptingText } from "@/components/decrypting-text";
+import { Footer } from "@/components/footer";
 
 export default function Home() {
 	const { ready, authenticated } = usePrivy();
 
 	return (
-		<main className="min-h-screen flex flex-col items-center justify-center gap-6 max-w-sm mx-auto mt-12">
+		<main className="min-h-screen flex flex-col items-center justify-center gap-6 max-w-sm mx-auto mt-12 sm:px-0 px-2">
 			<Suspense
 				fallback={
 					<h1 className="text-4xl font-mono font-extrabold">CONCEALMINT</h1>
@@ -27,6 +28,7 @@ export default function Home() {
 			</p>
 			<LoginButton />
 			{ready && authenticated && <NFTGrid />}
+			<Footer />
 		</main>
 	);
 }
