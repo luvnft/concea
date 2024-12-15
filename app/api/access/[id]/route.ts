@@ -50,7 +50,7 @@ export async function GET(
 		const nftReq = await fetch(`${process.env.INDEXER_URL}/nft/${params.id}`, {
 			method: "GET",
 			headers: {
-				"X-API-KEY": process.env.INDEXER_API_KEY as string,
+				"x-api-key": process.env.INDEXER_API_KEY as string,
 			},
 		});
 		const nftData = await nftReq.json();

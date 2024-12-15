@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
 			{
 				method: "GET",
 				headers: {
-					"X-API-KEY": process.env.INDEXER_API_KEY as string,
+					"x-api-key": process.env.INDEXER_API_KEY as string,
 				},
 				cache: "no-store",
 			},
