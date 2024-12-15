@@ -10,15 +10,27 @@ import {
 import { usePrivy } from "@privy-io/react-auth";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
-import { ipfsClient } from "@/lib/pinata";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
+import { NFTForm } from "./nft-form";
 
 interface NFT {
-	token_id: string;
-	image_url: string;
-	name: string;
-	description: string;
+	id: string;
+	owner: string;
+	metadata: {
+		name: string;
+		description: string;
+		extrnal_url: string;
+		image: string;
+		file: string;
+	};
+	images: {
+		original: string;
+		thumbnail: string;
+		sm: string;
+		md: string;
+		lg: string;
+	};
 }
 
 export const NFTGrid = forwardRef((props, ref) => {
@@ -43,18 +55,7 @@ export const NFTGrid = forwardRef((props, ref) => {
 				},
 			});
 			const nftData = await nftReq.json();
-			const updatedNfts = await Promise.all(
-				nftData.map(async (nft: any) => {
-					const imageUrl = await ipfsClient.gateways.convert(
-						nft.extra_metadata.image_original_url,
-					);
-					return {
-						...nft,
-						image_url: imageUrl,
-					};
-				}),
-			);
-			setNfts(updatedNfts);
+			setNfts(nftData);
 			setLoading(false);
 		} catch (error) {
 			console.log(error);
@@ -123,28 +124,27 @@ export const NFTGrid = forwardRef((props, ref) => {
 
 	return (
 		<div className="flex flex-col max-w-[500px] gap-4 items-center justify-start mb-12">
+			<NFTForm />
 			{nfts.map((nft: NFT) => (
 				<Card
 					className="flex flex-col w-full gap-2 overflow-hidden"
-					key={nft.token_id}
+					key={nft.id}
 				>
 					<img
 						className="max-w-sm"
-						src={nft.image_url || "/pfp.png"}
-						alt={nft.name}
+						src={nft.images.md || "/pfp.png"}
+						alt={nft.metadata.name}
 					/>
 					<div className="flex flex-col gap-2 p-4">
-						<p className="text-xl font-bold">{nft.name}</p>
-						<p>{nft.description}</p>
-						{verifyingId === nft.token_id ? (
+						<p className="text-xl font-bold">{nft.metadata.name}</p>
+						<p>{nft.metadata.description}</p>
+						{verifyingId === nft.id ? (
 							<Button disabled>
 								<Loader2 className="animate-spin" />
 								Verifying...
 							</Button>
 						) : (
-							<Button onClick={() => accessNFTFile(nft.token_id)}>
-								Access File
-							</Button>
+							<Button onClick={() => accessNFTFile(nft.id)}>Access File</Button>
 						)}
 					</div>
 				</Card>

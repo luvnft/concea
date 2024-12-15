@@ -8,7 +8,6 @@ import { usePrivy } from "@privy-io/react-auth";
 import { DecryptingText } from "@/components/decrypting-text";
 
 export default function Home() {
-	const gridRef = useRef<{ getNFTs: () => Promise<void> }>();
 	const { ready, authenticated } = usePrivy();
 
 	return (
@@ -27,12 +26,7 @@ export default function Home() {
 				Create and share NFTs with private files
 			</p>
 			<LoginButton />
-			{ready && authenticated && (
-				<>
-					<NFTForm onMintSuccess={() => gridRef.current?.getNFTs()} />
-					<NFTGrid ref={gridRef} />
-				</>
-			)}
+			{ready && authenticated && <NFTGrid />}
 		</main>
 	);
 }

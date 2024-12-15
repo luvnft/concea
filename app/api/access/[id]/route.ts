@@ -3,15 +3,7 @@ import { privy } from "@/lib/privy";
 import { baseClient } from "@/lib/viem";
 import { contract } from "@/lib/contract";
 import { isAddressEqual } from "viem";
-import { filesClient, ipfsClient } from "@/lib/pinata";
-
-interface NFT {
-	token_id: string;
-	image_url: string;
-	name: string;
-	description: string;
-	file: string;
-}
+import { filesClient } from "@/lib/pinata";
 
 export async function GET(
 	request: NextRequest,
@@ -43,19 +35,28 @@ export async function GET(
 			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 		}
 
-		const tokenURI = await baseClient.readContract({
-			address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x`,
-			abi: contract.abi,
-			functionName: "tokenURI",
-			args: [params.id],
+		// Replaced with Indexer
+		// const tokenURI = await baseClient.readContract({
+		// 	address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x`,
+		// 	abi: contract.abi,
+		// 	functionName: "tokenURI",
+		// 	args: [params.id],
+		// });
+
+		// const { data: nftData } = await ipfsClient.gateways.get(tokenURI as string);
+
+		// const nft = nftData as unknown as NFT;
+
+		const nftReq = await fetch(`${process.env.INDEXER_URL}/nft/${params.id}`, {
+			method: "GET",
+			headers: {
+				"X-API-KEY": process.env.INDEXER_API_KEY as string,
+			},
 		});
-
-		const { data: nftData } = await ipfsClient.gateways.get(tokenURI as string);
-
-		const nft = nftData as unknown as NFT;
+		const nftData = await nftReq.json();
 
 		const url = await filesClient.gateways.createSignedURL({
-			cid: nft.file,
+			cid: nftData.metadata.file,
 			expires: 180,
 		});
 

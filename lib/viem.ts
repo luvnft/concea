@@ -10,7 +10,7 @@ export const publicClient = createPublicClient({
 
 export const baseClient = createPublicClient({
 	chain: baseSepolia,
-	transport: http(),
+	transport: http(process.env.NEXT_PUBLIC_ALCHEMY_URL),
 });
 
 export async function mintNFT(tokenURI: string, provider: EIP1193Provider) {

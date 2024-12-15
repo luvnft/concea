@@ -14,18 +14,16 @@ export async function GET(request: NextRequest) {
 	try {
 		const user = await privy.getUserById(auth.userId);
 		const nftReq = await fetch(
-			`https://api.simplehash.com/api/v0/nfts/owners_v2?chains=base-sepolia&wallet_addresses=${user.wallet?.address}&contract_ids=base-sepolia.${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}&order_by=transfer_time__desc`,
+			`${process.env.INDEXER_URL}/nft?address=${user.wallet?.address}`,
 			{
 				method: "GET",
 				headers: {
-					"X-API-KEY": process.env.SIMPLEHASH_API_KEY as string,
-					accept: "application/json",
+					"X-API-KEY": process.env.INDEXER_API_KEY as string,
 				},
 				cache: "no-store",
 			},
 		);
 		const nftData = await nftReq.json();
-		console.log(nftData.nfts.length);
 		return NextResponse.json(nftData.nfts, { status: 200 });
 	} catch (e) {
 		console.log(e);
