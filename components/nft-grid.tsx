@@ -116,9 +116,9 @@ export const NFTGrid = forwardRef((props, ref) => {
 
 	if (!loading && nfts.length === 0) {
 		return (
-			<div>
-				<NFTForm getNFTs={getNFTs} />
+			<div className="flex flex-col gap-4 my-12">
 				<h1>No NFTs, make some now!</h1>
+				<NFTForm getNFTs={getNFTs} />
 			</div>
 		);
 	}
