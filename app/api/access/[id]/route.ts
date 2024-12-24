@@ -20,15 +20,15 @@ export async function GET(
 		const user = await privy.getUserById(auth.userId);
 
 		const ownerData = await baseClient.readContract({
-			address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x`,
+			address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0xFfad5A63E1Ed90DaC920A11340f9DfBc0ed3d3ee`,
 			abi: contract.abi,
 			functionName: "ownerOf",
 			args: [params.id],
 		});
 
 		const authorized = isAddressEqual(
-			ownerData as `0x`,
-			user.wallet?.address as `0x`,
+			ownerData as `0xFfad5A63E1Ed90DaC920A11340f9DfBc0ed3d3ee`,
+			user.wallet?.address as `0xFfad5A63E1Ed90DaC920A11340f9DfBc0ed3d3ee`,
 		);
 		if (!authorized) {
 			console.log("Unauthorized");

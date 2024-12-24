@@ -15,16 +15,16 @@ export default function Home() {
 		<main className="min-h-screen flex flex-col items-center justify-center gap-6 max-w-sm mx-auto mt-12 sm:px-0 px-2">
 			<Suspense
 				fallback={
-					<h1 className="text-4xl font-mono font-extrabold">CONCEALMINT</h1>
+					<h1 className="text-4xl font-mono font-extrabold">MINT.LUVNFT</h1>
 				}
 			>
 				<DecryptingText
-					text="CONCEALMINT"
+					text="MINT.LUVNFT"
 					className="scroll-m-20 text-4xl font-mono font-extrabold tracking-tight lg:text-5xl"
 				/>
 			</Suspense>
 			<p className="font-mono text-center">
-				Create and share NFTs with private files
+				Mint and share NFTs with private files
 			</p>
 			<LoginButton />
 			{ready && authenticated && <NFTGrid />}

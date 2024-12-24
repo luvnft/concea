@@ -18,25 +18,25 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-	title: "CONCEALMINT",
-	description: "Create and share NFTs with private files",
+	title: "MINT.LUVNFT",
+	description: "Mint and share NFTs with private files",
 	icons: {
 		apple: "/apple-touch-icon.png",
 		shortcut: "/favicon.ico",
 		icon: "/favicon.ico",
 	},
 	openGraph: {
-		title: "CONCEALMINT",
-		description: "Create and share NFTs with private files",
-		url: "https://concealmint.com",
-		siteName: "CONCEALMINT",
-		images: ["https://www.concealmint.com/og.png"],
+		title: "MINT.LUVNFT",
+		description: "Mint and share NFTs with private files",
+		url: "https://mint.luvnft.com",
+		siteName: "MINT.LUVNFT",
+		images: ["https://www.mint.luvnft.com/og.png"],
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "CONCEALMINT",
-		description: "Create and share NFTs with private files",
-		images: ["https://www.concealmint.com/og.png"],
+		title: "MINT.LUVNFT",
+		description: "Mint and share NFTs with private files",
+		images: ["https://www.mint.luvnft.com/og.png"],
 	},
 };
 
